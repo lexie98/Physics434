@@ -13085,7 +13085,7 @@ Partner: Kun Lee</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[126]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -13521,7 +13521,7 @@ Partner: Kun Lee</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>From fitting our curve, our time dependence is now defined by this exponential function:<br>
-$ f(t) = 5.569 + e^{(7.316\times 10^{-5}t + 40500)mod54000} + 5.698 $<br>
+$ f(t) = 5.569e^{7.316\times 10^{-5}((t + 40500)mod 54000)} + 5.698 $<br>
 The added 40500 is the anomaly offset while 54000 is the amount of data points contained in one orbit.
 Now that we have a model, we need to check how accurate this model is by comparing it with the data. We can do this by finding the coefficient of determination, of the "R-Squared" value, which is the proportion (ranging from 0-1) of the variance in the data that is predictable by our model. The closer R-squared is to 1, the better our model is.</p>
 
@@ -13662,7 +13662,7 @@ Now that we have a model, we need to check how accurate this model is by compari
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">images</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;images.h5&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
@@ -13678,7 +13678,7 @@ Now that we have a model, we need to check how accurate this model is by compari
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">intensities</span> <span class="o">=</span> <span class="p">[]</span>
@@ -13697,7 +13697,7 @@ Now that we have a model, we need to check how accurate this model is by compari
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -13745,15 +13745,15 @@ Now that we have a model, we need to check how accurate this model is by compari
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For each image in our data set, I have plotted the counts of each pixel on the left-hand plot showing us the position of stars, while the right-hand plot is a logarithmic distribution of the counts, showing us what are the most common counts. It is hard to tell the differences between images using the left-hand column of graphs, but comparing the distributions of each image shows us there is change from one to the next. In general, we see the greatest frequency of counts to be from around -3 to positive 3. Any pixel with counts in this range is unlikely to be a dim star and is probably due to the bias (counts from the low-level constant voltage placed on each pixel) of the CCD (assuming these images haven't been bias subtracted, without a header, I cannot be sure). The frequency of counts above 3 seems to flucuate from image to image but the general shape is consistant. This might be due to the change in seeing (how the atmosphere from telescope to object messes with the light) from one image to the next or perhaps an object with a changing light curve. Also note the brightest stars will have the highest number of counts and will appear as more distinct white dots on the plotted images.</p>
-<p>Now that I have explored the data a little, I want to be able to come up with a background distribution that will allow me to find the dimmest stars within the image. I will start this by creating an average image to eliminate some of the flucuation that is unwanted (this flucuation would be important for finding transients, however), and I will chop off some of the bias induced counts.</p>
+<p>For each image in our data set, I have plotted the counts of each pixel on the left-hand plot showing us the position of stars, while the right-hand plot is a logarithmic distribution of the counts, showing us what are the most common counts. It is hard to tell the differences between images using the left-hand column of graphs, but comparing the distributions of each image shows us there is change from one to the next. In general, we see the greatest frequency of counts to be from around -3 to positive 3. Any pixel with counts in this range is unlikely to be a dim star and is probably due to the bias (counts from the low-level constant voltage placed on each pixel) of the CCD (assuming these images haven't been bias subtracted, without a header, I cannot be sure). The frequency of counts above 3 seems to fluctuate from image to image but the general shape is consistant. This might be due to the change in seeing (how the atmosphere from telescope to object messes with the light) from one image to the next or perhaps an object with a changing light curve. Also note the brightest stars will have the highest number of counts and will appear as more distinct white dots on the plotted images.</p>
+<p>Now that I have explored the data a little, I want to be able to come up with a background distribution that will allow me to find the dimmest stars within the image. I will start this by creating an average image to eliminate some of the fluctuation that is unwanted (this fluctuation would be important for finding transients, however), and I will chop off some of the bias induced counts.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">image_average</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">])</span>
@@ -13815,7 +13815,7 @@ Now that we have a model, we need to check how accurate this model is by compari
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[72]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Standard Deviation:&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">trimmed_data</span><span class="p">))</span>
@@ -13855,11 +13855,11 @@ Now that we have a model, we need to check how accurate this model is by compari
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[118]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">star_intensities</span> <span class="o">=</span> <span class="p">[]</span>
-
+<span class="n">sigma</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">trimmed_data</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
         <span class="n">point</span> <span class="o">=</span> <span class="n">image_average</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
@@ -13913,7 +13913,7 @@ Now that we have a model, we need to check how accurate this model is by compari
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[119]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">star_intensities</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
@@ -13934,7 +13934,7 @@ Now that we have a model, we need to check how accurate this model is by compari
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Maximum Intensity Cut-off: 1.6218860566732025
+<pre>Maximum Intensity Cut-off: 1.7002808500177853
 </pre>
 </div>
 </div>
@@ -13945,7 +13945,7 @@ Now that we have a model, we need to check how accurate this model is by compari
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[131]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">minimum</span> <span class="o">=</span> <span class="mi">5</span><span class="o">*</span><span class="mf">0.17755486102473308</span>
@@ -13998,7 +13998,7 @@ Now that we have a model, we need to check how accurate this model is by compari
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[132]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dimstar_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Star Intensity&#39;</span><span class="p">,</span><span class="s1">&#39;Position X&#39;</span><span class="p">,</span> <span class="s1">&#39;Position Y&#39;</span><span class="p">])</span>
@@ -14019,7 +14019,7 @@ Now that we have a model, we need to check how accurate this model is by compari
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[132]:</div>
+    <div class="prompt output_prompt">Out[23]:</div>
 
 
 
@@ -14122,7 +14122,7 @@ Now that we have a model, we need to check how accurate this model is by compari
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Finally, I have gathered the dimmest stars of this field of view. The table above list the intensity and x&amp;y position of all ten dimmest stars. The blue dots on the image above shows a better view of where my stars are located on the field of view.</p>
+<p>Finally, I have gathered the dimmest stars of this field of view! The table above list the intensity and x&amp;y position of all ten dimmest stars. The blue dots on the image above shows a better view of where my stars are located on the field of view.</p>
 
 </div>
 </div>
@@ -14130,23 +14130,10 @@ Now that we have a model, we need to check how accurate this model is by compari
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>While I have got the answer I was looking for, it is important to note that different questions lead to different probability distribution functions. In this example I was looking for the dimmest stars, and used a gaussian distribution. If I where looking for a something with a variable light curve, it would require a different pdf. Instead of comparing the counts of a star against the background, I would instead need to look at how much the counts change at a given position from one image to the next.</p>
+<p>While I have got the answer I was looking for, it is important to note that different questions lead to different probability distribution functions. In this example I was looking for the dimmest stars, and used a gaussian distribution. If I where looking for a something with a variable light curve, it would require a different pdf. Instead of comparing the counts of a star against the background, I would instead need to look at how much the counts change at a given position from one image to the next instead of just looking at the average of the counts at each position.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
 </div>
     </div>
   </div>
